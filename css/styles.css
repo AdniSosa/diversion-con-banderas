@@ -3,8 +3,50 @@ body {
   background-color: #f0f0f0;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 h1 {
   color: #333;
+  margin: 50px;
+}
+
+#countries-list {
+  display: flex;
+  height: 300px;
+  flex-wrap: wrap;
+}
+
+.countryDiv {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#countries-list img {
+  margin: 10px;
+  height: 150px;
+}
+
+#countries-list h2 {
+  font-size: 20px;
+  width: 150px;
+}
+
+.emergente {
+  width: 500px;
+border: 2px solid black;
+position: relative;
+left: 450px;
+}
+
+.emergente p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.close {
+  position: relative;
+  left: 200px
 }
