@@ -34,19 +34,17 @@ h1 {
   width: 150px;
 }
 
-.emergente {
-  width: 500px;
-border: 2px solid black;
-position: relative;
-left: 450px;
-}
-
-.emergente p {
-  font-size: 18px;
-  margin-bottom: 30px;
+#ventana-emergente {
+  background-color: sandybrown;
+  width: 400px;
+  position: fixed;
+  top: 25%;
+  left: 35%;
+  padding: 40px 0 20px 0;
 }
 
 .close {
-  position: relative;
-  left: 200px
+  position: fixed;
+  top: 25%;
+  left: 62%
 }

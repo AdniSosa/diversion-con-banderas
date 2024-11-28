@@ -1,13 +1,21 @@
 const api = 'https://restcountries.com/v3/all';
 const countriesDiv = document.getElementById('countries-list');
-let countriesToSort = [];
-let sortedCountries;
+const divEmergente = document.getElementById('ventana-emergente');
+divEmergente.style.display = 'none';
+let countriesArr = [];
+
 
 
 const getcountriesInfo = async () => {
     try {
         const response = await fetch(api);
         const data = await response.json();
+        
+        //ordeno la data alfabéticamente
+        data.sort((a, b) => {
+            return a.name.common.localeCompare(b.name.common);
+        })
+
         //console.log(data);
         return data;
         
@@ -23,73 +31,72 @@ const orderInfo = (countriesInfo) => {
        
         const {name: {common: countryName}, capital, flags, population, car: {side}} = info;
         const [png] = flags;
-
-        //Meto la información de cada país en un objeto y luego en un array para ordenarlo por nombre alfabéticamente.            
-        let sort = {
+        
+        //Meto la información de cada país en un objeto.          
+        let countryInfo = {
             nombre: countryName,
             capital: capital ? capital.join(', ') : 'N/A',
             bandera: png,
             población: population,
             conducción: side
         };
-        //console.log(sort);
         
-        countriesToSort.push(sort);
-        //console.log(countriesToSort);
-
+        //Hago push a array
+        countriesArr.push(countryInfo);
+        //console.log(countriesArr);
+        
     }
-
-    //Creo una función para ordenar el sortCountry alfabéticamente
-    sortedCountries = countriesToSort.sort(function(a, b){
-        if(a.nombre.toLowerCase() < b.nombre.toLowerCase()) { return -1; }
-        if(a.nombre.toLowerCase() > b.nombre.toLowerCase()) { return 1; }
-        return 0;
-    })  
-    //console.log(typeof sortCountries);
-    //console.log(sortedCountries);
-
-    //Muestro la información en pantalla        
-    countriesDiv.innerHTML = sortedCountries.map(country => 
-        `<div class="countryDiv">
-                <img src="${country.bandera}" class="flag"  width="200" alt="Bandera de ${country.nombre}" />
-                <h2>${country.nombre}</h2>
-            </div>`
-        )
+    
+    //Muestro la información en el HTML haciendo map del array     
+    countriesDiv.innerHTML = countriesArr.map(country => 
+         `<div class="countryDiv">
+            <img src="${country.bandera}" class="flag"  width="200" alt="Bandera de ${country.nombre}" />
+            <h2>${country.nombre}</h2>
+        </div>`
+    
+    )
+    
+    
 }
 
 
 const showMoreInfo = () => {
+    
     document.body.addEventListener('click', (event) => {
-    //console.log( event.target.alt)
+        //console.log( 'click')
     
-    const filterArray = sortedCountries.filter(country => event.target.alt === `Bandera de ${country.nombre}`)
-    //console.log(filterArray);
-    
+        const filterArray = countriesArr.filter(country => event.target.alt === `Bandera de ${country.nombre}`)
+        //console.log(filterArray);
+        
         if (filterArray.length > 0) {
             const country = filterArray[0];
+            divEmergente.style.display = 'block';
     
-            countriesDiv.innerHTML = `
-                <div class='emergente'>
+            divEmergente.innerHTML = `
                     <p class="close">X</p>
                     <img src="${country.bandera}" width="200" alt="Bandera de ${country.nombre}" />
                     <p><strong>País:</strong> ${country.nombre}</p>
                     <p><strong>Capital:</strong> ${country.capital}</p>
                     <p><strong>Población:</strong> ${country.población} personas</p>
                     <p><strong>Lado de circulación:</strong> ${country.conducción}</p>
-                </div>
-                `             
                 
-        } 
-    })
-} 
+                `             
+        }    
+            
+    })    
+   
+}  
 
 //Esto no lo conseguí
-document.body.addEventListener('click', (event) => {
-    console.log(event);
-    if(event.target === 'p')
+const button = document.querySelector('.close');
+console.log(button)
+
+/* button.addEventListener('click', (event) => {
+   console.log(event);
+    
     console.log('click')
 
-})
+}) */
 
 
 getcountriesInfo().then(info => orderInfo(info));
