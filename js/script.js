@@ -1,6 +1,8 @@
 const api = 'https://restcountries.com/v3/all';
 const countriesDiv = document.getElementById('countries-list');
 const divEmergente = document.getElementById('ventana-emergente');
+const button = document.getElementById('close');
+button.style.display = 'none';
 divEmergente.style.display = 'none';
 let countriesArr = [];
 
@@ -38,7 +40,7 @@ const orderInfo = (countriesInfo) => {
             capital: capital ? capital.join(', ') : 'N/A',
             bandera: png,
             población: population,
-            conducción: side
+            conducción: side 
         };
         
         //Hago push a array
@@ -54,7 +56,7 @@ const orderInfo = (countriesInfo) => {
             <h2>${country.nombre}</h2>
         </div>`
     
-    )
+    ).join(''); 
     
     
 }
@@ -71,9 +73,9 @@ const showMoreInfo = () => {
         if (filterArray.length > 0) {
             const country = filterArray[0];
             divEmergente.style.display = 'block';
-    
+            button.style.display = 'block';
+
             divEmergente.innerHTML = `
-                    <p class="close">X</p>
                     <img src="${country.bandera}" width="200" alt="Bandera de ${country.nombre}" />
                     <p><strong>País:</strong> ${country.nombre}</p>
                     <p><strong>Capital:</strong> ${country.capital}</p>
@@ -87,16 +89,13 @@ const showMoreInfo = () => {
    
 }  
 
-//Esto no lo conseguí
-const button = document.querySelector('.close');
-console.log(button)
+//Botón para cerrar la ventana emergente.
+button.addEventListener('click', () => {
+   //console.log(event);
+   divEmergente.style.display = 'none';
+   button.style.display = 'none';
 
-/* button.addEventListener('click', (event) => {
-   console.log(event);
-    
-    console.log('click')
-
-}) */
+})
 
 
 getcountriesInfo().then(info => orderInfo(info));

@@ -43,8 +43,11 @@ h1 {
   padding: 40px 0 20px 0;
 }
 
-.close {
+#close {
+  background-color: transparent;
+  border: none;
+  font-size: 17px;
   position: fixed;
-  top: 25%;
-  left: 62%
+  top: 27%;
+  left: 62%;
 }
